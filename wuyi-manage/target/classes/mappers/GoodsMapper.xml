@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wy.manage.mapper.GoodsMapper">
+	<select id="findGoods" resultType="Goods">
+	select * from tb_goods
+	limit #{startIndex},#{pageSize}
+	</select>
+	
+	<insert id="insertGoods">
+	insert into tb_goods
+	(ID,typeID,goodsName,introduce,price,nowPrice,
+	picture,INTime,newGoods,sale,hit,stock)
+	values
+	(null,#{typeID},#{goodsName},#{introduce},#{price},#{price},
+	 #{picture},now(),#{newGoods},#{sale},#{hit},#{stock})
+	</insert>
+	
+	<update id="updateGoods">
+	update tb_goods set
+	typeID=#{typeID},
+	goodsName=#{goodsName},
+	introduce=#{introduce},
+	price=#{price},
+	nowPrice=#{price},
+	picture=#{picture},
+	INTime=now(),
+	newGoods=#{newGoods},
+	sale=#{sale},
+	hit=#{hit},
+	stock=#{stock}
+	where ID=#{ID}
+	</update>
+	
+	<delete id="deleteGoodsById">
+	delete from tb_goods
+	where ID in
+	<foreach collection="Ids" open="(" close=")" separator="," item="id">
+	#{id}
+	</foreach>
+	</delete>
+	
+</mapper>
+

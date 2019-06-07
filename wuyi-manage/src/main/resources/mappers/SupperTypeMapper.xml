@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wy.manage.mapper.SupperTypeMapper">
+
+<resultMap type="SupperType" id="supperType">
+	<id property="id" column="ID"/>
+	<result property="typeName" column="TypeName"/>
+</resultMap>
+
+<select id="findSupperType" resultType="supperType">
+	select * from tb_supertype
+</select>
+
+<insert id="insertSuperType">
+	insert into tb_supertype
+	(ID,TypeName)
+	values
+	(null,#{typeName})
+</insert>
+
+<delete id="delSuperTypeById">
+	delete from tb_supertype 
+	<where>
+	ID in
+	<foreach collection="ids" open="(" close=")" separator="," item="id">
+	#{id}
+	</foreach>
+	</where> 
+	
+</delete>
+
+</mapper>

@@ -1,0 +1,83 @@
+﻿
+<div id="toolbar" style="background-color: #F0F0F0; width: 100%;">
+	<div class="container">
+		<div class="row">
+			<div class="toolbar-ct-1">
+				<p>
+					<i class="fa fa-phone"></i> <span style="margin-right: 15px;">电话：400-675-1066</span><a
+						href="doLoginUI.do">登录</a>&nbsp; ｜ &nbsp;<a href="doRegister.do">注册</a>
+				</p>
+			</div>
+			<div class="toolbar-ct-2">
+				<a onClick="doorderlist()" href="#">我的订单</a>&nbsp;&nbsp; | &nbsp;&nbsp; 我的收藏
+			</div>
+		</div>
+	</div>
+	<div style="background-color: white; width: 100%">
+		<div class="container">
+			<div class="row">
+				<div class="toolbar-ct col-xs-12 col-md-6  hidden-sm hidden-xs">
+					<div class="toolbar-ct-1">
+						<img src="images/51logo.png">
+					</div>
+					<div>
+						<!-- 搜索条 -->
+						<div class="search_box">
+							<div class="top-nav-search">
+								<div method="get" action="doSearch.do">
+									<input type="text" name="searchword" size="38"
+										style="border: 0px;" class="top-nav-search-input"
+										placeholder="请输入内容" /> <input type="image"
+										src="images/search.png" class="search_box_img"
+										onFocus="this.blur()" />
+								</div>
+							</div>
+						</div>
+						<!-- //搜索条 -->
+
+
+
+					</div>
+				</div>
+
+				<div class="toolbar-ct toolbar-ct-right col-xs-12 col-md-3">
+
+
+					<div class="toolbar-ct-2 "
+						style="margin-top: 35px; border: 1px solid #EAEAEA; padding: 5px;">
+						<a href="doCarsee.do" style="color: #E33737; font-size: 20px;"><i
+							class="fa fa-cart1"></i> 我的购物车</a>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+jQuery(".top-nav-search .search_box_img").click(function(){
+	
+	var url="doSearch.do"
+	var word=jQuery(".top-nav-search .top-nav-search-input").val();
+	console.log(word);
+	var wordEn=encodeURI(word)
+	location.href=url+"?word="+wordEn;
+
+})
+
+
+function doorderlist(){
+	jQuery.getJSON("order/doorderList.do",function(result){
+		if(result.state==0){
+			
+			window.location.href="doLoginUI.do"
+		}else{
+			//alert(result.message)
+			window.location.href="showOrderList.do"
+		}
+	})
+}
+</script>

@@ -1,0 +1,123 @@
+
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td height="10" colspan="3">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="29" align="right">&nbsp;</td>
+        <td width="10" background="images/manage_leftTitle_left.GIF">&nbsp;</td>
+        <td width="1089" align="center" background="images/manage_leftTitle_mid.GIF" class="word_white"><b>会员列表</b></td>
+        <td width="10" background="images/manage_leftTitle_right.GIF">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+	<!---->
+<table width="100%" height="14"  border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td height="13" align="center">&nbsp;</td>
+            </tr>
+      </table>
+            <table width="96%" height="48"  border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#CCCCCC" bordercolorlight="#FFFFFF">
+            <thead>
+              <tr>
+                <td width="14%" height="27" align="center">
+                  用户名</td>
+                <td width="14%" align="center">真实姓名</td>
+                
+                <td width="14%" align="center">电话</td>
+                <td width="26%" align="center">Email</td>
+                <td width="10%" align="center">销费额</td>
+                <!-- <td width="11%" align="center">冻结/解冻</td> -->
+                </tr>
+</thead>
+<tbody id="tbodyId" >
+
+              <tr style="padding:5px;">
+                <td height="24" align="center"><a href="member_detail.jsp?ID=<%=ID%>"><%=username%></a>&nbsp;</td>
+                <td align="center"><%=Truename%>&nbsp;</td>
+                
+                <td align="center"><%=Tel%>&nbsp;</td>
+                <td align="center"><%=Email%>&nbsp;</td>
+                <td align="center"><%=Amount%></td>
+                
+              </tr>
+</tbody>
+      </table>
+ 			<table align="center" >
+      			<div id="pageId"></div>
+     	 </table>
+	 <!----> 
+<script>
+	jQuery(function(){
+		
+		 
+		 //加载分页按钮页面
+		 $("#pageId").load("doPageUI.do",function(){
+			//初始化显示第一页数据
+		   doGetObjects();
+			
+		   });
+		 
+		
+	})
+	
+	//查询并显示当前页数据
+ function doGetObjects(){
+	
+	var pageCurrent=$("#pageId").data("pageCurrent");
+	if(!pageCurrent)pageCurrent=1;
+	//1.请求参数定义
+	var params={"pageCurrent":pageCurrent};
+	//2.请求url定义
+	var url="good/doFindMembers.do"
+	//3.发起异步请求获取数据(借助jQuery中的getJSON)
+	//result是返回的JSON对象(由JSON字符串转换而来)
+	$.getJSON(url,params,function(result){//callback
+		doHandleResponseResult(result);
+	});//ajax (xhr)
+	}
+ 
+	//处理服务端的响应结果
+	function doHandleResponseResult(result){
+		if(result.state==1){
+			//显示当前日志数据
+			doSetTableBodyRows(result.data.records);
+			//显示分页信息
+			doSetPagination(result.data);
+		}else{
+			alert(result.message);
+		}
+	}
+	
+	function doSetTableBodyRows(records){
+		//1.获取tbody对象,并清空原有内容
+		var tBody=$("#tbodyId");        
+		tBody.empty(); //tBody.innerHTML=""
+		//2.迭代records记录,然后追加到tbody中
+		for(var i=0;i<records.length;i++){
+			var tr=$("<tr align='center'></tr>");
+			var tds=doCreateTds(records[i]);
+			tr.append(tds);
+			tBody.append(tr);
+		}                                                            
+		
+		
+		
+	}
+	
+	function doCreateTds(data){
+		   var tds="<td height='24' align='center'>"+data.username+"</td>"+
+			   	 "<td align='center'>"+data.truename+"</td>"+
+			     "<td align='center'>"+data.tel+"</td>"+
+			     "<td align='center'>"+data.email+"</td>"+
+			     "<td align='center'>"+data.amount+"</td>";
+			    	   
+			return tds;
+	 }
+ 
+ 
+	
+
+</script>

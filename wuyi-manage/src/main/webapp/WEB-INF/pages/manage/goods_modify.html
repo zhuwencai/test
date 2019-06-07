@@ -1,0 +1,222 @@
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="10" height="38" align="right">&nbsp;</td>
+		<td colspan="3" class="tableBorder_B_dashed"><img
+			src="images/manage_ico1.GIF" width="11" height="11">&nbsp;<a
+			href="superType.jsp"> [大分类信息管理]</a>&nbsp;&nbsp;&nbsp;<img
+			src="images/manage_ico2.GIF" width="11" height="11">&nbsp;<a
+			href="subType.jsp">[小分类信息管理]</a>&nbsp;&nbsp;&nbsp;<img
+			src="images/manage_ico3.GIF" width="12" height="12">&nbsp;<a
+			href="goods_add.jsp">[添加商品信息]</a></td>
+		<td width="12">&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right">&nbsp;</td>
+		<td height="10" colspan="3">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="29" align="right">&nbsp;</td>
+		<td width="10" background="images/manage_leftTitle_left.GIF">&nbsp;</td>
+		<td width="1089" align="center"
+			background="images/manage_leftTitle_mid.GIF" class="word_white"><b>修改商品信息</b></td>
+		<td width="10" background="images/manage_leftTitle_right.GIF">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<!---->
+<form  name="form1" id="form1">
+	<table width="94%" border="0" align="right" cellpadding="-2"
+		cellspacing="-2" bordercolordark="#FFFFFF">
+		<tr>
+			<td width="14%" height="27">&nbsp;商品名称： 
+				<input name="ID"
+				type="hidden" id="ID" >
+			</td>
+			<td height="27" colspan="3">&nbsp; 
+				<input name="goodsName"
+				type="text" class="Sytle_text" id="goodsNameId" size="50">
+				&nbsp;&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td height="27">&nbsp;所属大类：</td>
+			<td width="31%" height="27">&nbsp; 
+			<select name="supertype"
+				class="textarea" id="supertype" onChange="selSubType(this.value)">
+					
+			</select></td>
+			<td width="13%" height="27">&nbsp;所属小类：</td>
+			<td width="42%" height="27" id="subType">
+				<select name="typeID" class="textarea" id="typeID">
+				
+				
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td height="16">&nbsp;图片文件：</td>
+			<td height="27" colspan="3">&nbsp; <input name="picture"
+				type="text" class="Style_upload" id="picture" "
+				size="30"> (此处只填写图片文件路径即可)
+			</td>
+		</tr>
+		<tr>
+			<td height="27" align="center">定 价：</td>
+			<td height="27"><span style="float: left;"><input
+					name="price" type="text" class="Sytle_text" id="price3"
+					 size="14"> </span><span
+				style="float: left; padding-top: 10px;">&nbsp;(元)</span></td>
+			<td height="27" align="center">现&nbsp;&nbsp;&nbsp;&nbsp;价：</td>
+			<td height="27"><span style="float: left;"><input
+					name="nowPrice" type="text" class="Sytle_text" id="price4"
+					 size="14"> </span><span
+				style="float: left; padding-top: 10px;">&nbsp;(元)</span></td>
+		</tr>
+		<tr>
+			<td height="45">&nbsp;是否新品：</td>
+			<td>&nbsp; <input name="newGoods" type="radio" class="noborder"
+				value="1"> 是 <input name="newGoods" type="radio"
+				class="noborder" value="0"> 否
+			</td>
+			<td>&nbsp;是否特价：</td>
+			<td><input name="sale" type="radio" class="noborder" value="1">
+				是 <input name="sale" type="radio" class="noborder" value="0">
+				否</td>
+		</tr>
+		<tr>
+			<td height="103">&nbsp;商品简介：</td>
+			<td colspan="3"><span class="style5">&nbsp; </span> <textarea
+					name="introduce" cols="60" rows="5" class="textarea" id="introduce"></textarea></td>
+		</tr>
+		<tr>
+			<td height="38" colspan="4" align="center">
+			<input name="Button"
+				type="button" class="btn_bg_short" value="保存"  onClick="mycheck()" >
+				&nbsp; 
+				<input name="Submit2" type="reset" class="btn_bg_short"
+				value="重置"> &nbsp; 
+				<input name="Submit3" type="button"
+				class="btn_bg_short" value="返回" onClick="cansel()">
+			</td>
+		</tr>
+	</table>
+</form>
+
+<script language="javascript">
+/***************************调用函数*************************/
+$(document).ready(function(){
+	
+	var chooseid=$("#mainBody").attr("choosedId");
+	
+	jQuery("#ID").val(chooseid)
+	console.log("123:"+$("#ID").val())
+	//selSubType();
+	
+		var url="good/doFindSuperTypes.do"
+		jQuery.getJSON(url,function(result){	
+			console.log(result.data.records)
+			doSetTableBodyRows(result.data.records,"supertype")
+			
+			selSubType($("#supertype").val())
+		})
+		url="good/doFindGoodById.do"
+	$.post(url,{id:chooseid},function(result){
+		console.log(result)
+		if(result != null){
+			initializeform(result)
+		}else{
+			alert("未获取到当前商品数据")
+		}
+	})
+});
+
+/**
+ * 重新加载商品列表
+ */
+function cansel(){
+	if (!confirm("您要放弃修改吗?")) {
+		return;
+	}
+	jQuery("#mainBody").load("doGoodsManage.do");
+}
+
+/**
+ * 初始化商品修改页面数据
+ */
+function initializeform(data){
+	$("#goodsNameId").val(data.goodsName);
+	//$("#supertype").find("option[text='"+data.+"'"]").attr("selected",true);
+	$("#picture").val(data.picture);
+	$("input[type=radio][name=newGoods][value="+data.newGoods+"]").attr("checked",'checked')
+	$("input[type=radio][name=sale][value="+data.sale+"]").attr("checked",'checked')
+	$("#price3").val(data.price);
+	$("#price4").val(data.price);
+	$("#introduce").text(data.introduce);
+	
+}
+
+function selSubType(val){
+
+	$.get("good/doSelSubType.do",{superId:val},function(result){
+				//$("#subType").html(data); 		//显示获取到的小分类
+				doSetTableBodyRows(result.data,"typeID")
+	});
+}
+
+function doSetTableBodyRows(records,id){
+	//console.log(records);
+	//1.获取tbody对象,并清空原有内容
+	var tBody=$("#"+id);
+	tBody.empty(); //tBody.innerHTML=""
+	//2.迭代records记录,然后追加到tbody中
+	for(var i=0;i<records.length;i++){
+		var data=records[i];
+		var option="<option value="+data.id+">"+data.typeName+"</option>"
+		tBody.append(option);
+	}
+	
+	
+}
+
+function mycheck(){
+	if (form1.goodsName.value==""){
+		alert("请输入商品名称！");form1.goodsName.focus();return;
+	}
+	if (form1.picture.value==""){
+		alert("请输入图片文件的路径！");form1.picture.focus();return;
+	}
+	if (form1.price.value==""){
+		alert("请输入商品的定价！");form1.price.focus();return;
+	}
+	if (isNaN(form1.price.value)){
+		alert("您输入的定价错误，请重新输入！");form1.price.value="";form1.price.focus();return;
+	}	
+	if (form1.introduce.value==""){
+		alert("请输入商品简介！");form1.introduce.focus();return;
+	}		
+	
+	console.log( $('#form1').serialize())
+        jQuery.ajax({
+        //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "goods/doUpdateObject.do" ,//url
+            data: $('#form1').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.state == 1) {
+                    alert(result.message);
+                }else{
+                	 alert(result.message);
+                }
+                ;
+            },
+           
+        });
+    
+}
+</script>
+<!---->

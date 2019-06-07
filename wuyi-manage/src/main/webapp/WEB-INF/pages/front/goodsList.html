@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>图书列表-51商城</title>
+<link rel="stylesheet" href="css/mr-01.css" type="text/css">
+
+<script src="js/jsArr01.js" type="text/javascript"></script>
+<script src="js/module.js" type="text/javascript"></script>
+<script src="js/jsArr02.js" type="text/javascript"></script>
+<script src="js/tab.js" type="text/javascript"></script>
+</head>
+
+<body>
+	<!--  include page="index-loginCon.html" -->
+	<div class="include" file="doLogCon.do"></div>
+	
+
+	<!-- 网站头部 -->
+	<!--  include page="common-header.html" -->
+	<div class="include" file="doCommonHeader.do"></div>
+	<!-- //网站头部 -->
+	<div id="mr-mainbody" class="container mr-mainbody">
+		<div class="row">
+			<!-- //分页显示图书列表 -->
+			<div id="mr-content"
+				class="mr-content col-xs-12 col-sm-12 col-md-9 col-md-push-3">
+
+				<div id="system-message-container" style="display: none;"></div>
+
+				<div id="mrshop" class="mrshop common-home">
+					<div class="container_oc">
+						<ul class="breadcrumb">
+						</ul>
+						<div class="row">
+							<div id="content_oc" class="col-sm-12">
+								<div class="box_oc">
+									<div class="box-heading">
+										<h1 class="mrshop_heading_h1"><%=typeName%></h1>
+									</div>
+									<div class="box-content">
+										<hr>
+										<div id="rowGoods" class="row">
+											
+
+											
+											
+										</div>
+										
+										<div class="row pagination">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr>
+													<td id="pageCon" height="30" align="right">
+														<a class="pages">当前页数：[<]&nbsp</a>
+														<a > &nbsp &nbsp &nbsp</a>
+														 <a href="#" class="first">第一页</a> 
+														 <a	href="#" class="pre">上一页</a>
+														 <a	href="#" class="next">下一页</a>
+														 <a href="#" class="last">最后一页&nbsp;</a>
+														
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //分页显示图书列表 -->
+			<!-- 显示左侧热门商品 -->
+			<jsp:include page="leftHotGoods.html">
+				<jsp:param name="type" value="<%=type%>" />
+			</jsp:include>
+			<div class="row" id="leftRows"></div>
+			<!-- // 显示左侧热门商品 -->
+		</div>
+	</div>
+	<!-- 版权栏 -->
+	<!--  include page="common-footer" -->
+	<div class="include" file="doCommonFooter.do"></div>
+	
+	<!-- //版权栏 -->
+</body>
+<script>
+	jQuery(document).ready(function() {
+
+			
+		//获取传入的商品id
+		var preUrl=window.location.href;
+		var type=preUrl.split("=")[1];
+		jQuery("#mr-content").data("type",type);
+		var typeName="aa";
+		switch(type){
+		case("14"):
+			typeName="图书";break;
+		case("15"):
+			typeName="家电";break;
+		case("16"):
+			typeName="服装";break;
+		case("17"):
+			typeName="电子";break;
+		}
+		console.log(typeName);
+		
+	 jQuery("#mrshop .mrshop_heading_h1").html(typeName);
+		         
+		//console.log(jQuery("#content_oc").data("typeId"));
+		
+		//加载头部底部页面
+		loadCommonPages();
+			
+		doGetObjectss(type,1);	 
+		jQuery("#pageCon")
+		.on("click",".first,.pre,.next,.last",doJumpToPage);
+			
+			
+		jQuery("#leftRows").load("doLeft.do")	
+			
+		});
+
+	//获取分页信息
+	function doGetObjectss(type,pageCurrent){
+		
+		
+		var url="good/doFindGoodsByType.do"
+		var params={"type":type,"pageCurrent":pageCurrent,"pageSize":12};
+		jQuery.getJSON(url,params,function(result){
+			
+			doSetRows(result.data.records);
+			doSetPagination(result.data);
+		})
+	}
+	
+	//初始化分页信息
+	function doSetPagination(pageObject){
+		
+		jQuery("#pageCon .pages").html("当前页数:  "+pageObject.pageCurrent+"/"+pageObject.pageCount+"&nbsp;");
+		//1.初始化总记录数
+		//4.在页面上存储当前页码值以及总页数
+		jQuery("#pageCon").data("pageCurrent",pageObject.pageCurrent);
+		jQuery("#pageCon").data("pageCount",pageObject.pageCount);
+	}
+	
+	//基于事件执行下一次的查询
+	function doJumpToPage(){
+		//1.修改当前页码值
+		//1.1获取当前页码值,以及总页数
+		var pageCurrent=jQuery("#pageCon").data("pageCurrent");
+		var pageCount=jQuery("#pageCon").data("pageCount");
+		//1.2获取点击对象的class属性值
+		var cls=jQuery(this).prop("class");//prop-->properties
+		//1.3基于class属性值修改pageCurrent
+		if(cls=="first"){
+			pageCurrent=1;
+		}else if(cls=="pre"){
+			if(pageCurrent!=1){
+				pageCurrent--;
+			}else{
+				alert("已经是首页了")
+			}
+		}else if(cls=="next"){
+			if(pageCurrent!=pageCount){
+				pageCurrent++;
+			}else{
+				alert("已经是尾页了")
+			}
+		}else if(cls=="last"){
+			pageCurrent=pageCount;
+		}
+		//2.基于当前页码值执行下次查询
+		//2.1保存当前页码值
+		jQuery("#pageCon").data("pageCurrent",pageCurrent);
+		
+		console.log("pagecurrent="+pageCurrent);
+		//2.2基于页码值执行当前查询
+		var type=jQuery("#mr-content").data("type");
+		console.log("type="+type);
+		doGetObjectss(type,pageCurrent);
+		
+	}
+
+	function loadCommonPages(){
+		jQuery.ajaxSetup ({ cache: false });
+		
+		jQuery(".include").each(function(){
+				console.log(jQuery(this).attr("file"));
+				
+				if(!!jQuery(this).attr("file")){
+					var $includeObj=jQuery(this);
+					
+					var url=jQuery(this).attr("file");
+					jQuery(this).load(url,function(html){
+						$includeObj.after(html).remove();
+					})
+				}
+			})
+	}
+
+	function doSetRows(records){
+		var rowBody=jQuery("#rowGoods");
+		rowBody.empty();
+		for(var i=0;i<records.length;i++){
+		var rows="<div 	class='product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12' > "+
+					"<div class='product-thumb'> "+
+						"<div class='actions'> "+
+							"<div class='image'> "+
+								"<a style='width: 95%' href='doGoodsDetail.do?ID="+records[i].id+" '>"+
+									"<img src='./images/goods/"+records[i].picture+"' class='img-responsive'> "+
+								"</a> "+
+							"</div> "+
+							"<div class='button-group btn-grid'> "+
+								"<div class='cart'> "+
+									"<button class='btn btn-primary btn-primary' "+
+										"type='button' data-toggle='tooltip' "+
+										"onclick='doAdd("+records[i].id+",1)' "+
+										"style='display: none; width: 33.3333%;' "+
+										"data-original-title='添加到购物车'> "+
+										"<i class='fa fa-shopping-cart'></i> "+
+									"</button> "+
+								"</div> "+
+								"<div class='wishlist'> "+
+									"<button class='btn' type='button' data-toggle='tooltip' "+
+										"title='收藏'> "+
+										"<i class='fa fa-heart'></i> "+
+									"</button> "+
+								"</div> "+
+							"</div> "+
+						"</div> "+
+						"<div> "+
+							"<div class='caption'> "+
+								"<div class='name'> "+
+									"<a href='doGoodsDetail.do?ID="+records[i].id+"' style='width: 95%'> "+
+										"<span style='color: #0885B1'>名称：</span>"+records[i].goodsName+"</a> "+
+								"</div> "+
+								"<p class='price'> "+
+									//"<span class='price-new'>分类：</span> "+
+									//"<span><%=TypeName%></span> "+
+							   		"<span class='price-tax'>价格:"+records[i].nowPrice+"元 </span> "+
+								"</p> "+
+							"</div> "+
+						"</div> "+
+					"</div> "+
+				"</div> "
+
+		rowBody.append(rows);
+				if(i%4==3){
+					rowBody.append("<div class='clearfix'></div>")
+				}
+	}
+	}
+
+	
+</script>
+
+
+</html>

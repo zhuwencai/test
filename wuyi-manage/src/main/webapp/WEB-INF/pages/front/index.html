@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>首页-51商城</title>
+<link rel="stylesheet" href="css/mr-01.css" type="text/css">
+<script src="js/jsArr01.js" type="text/javascript"></script>
+<script src="js/module.js" type="text/javascript"></script>
+<script src="js/jsArr02.js" type="text/javascript"></script>
+<script src="js/tab.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+	<!--  include page="index-loginCon.html" -->
+	<div class="include" file="doLogCon.do"></div>
+	
+
+	<!-- 网站头部 -->
+	<!--  include page="common-header.html" -->
+	<div class="include" file="doCommonHeader.do"></div>
+	
+	<!-- //网站头部 -->
+	<!-- 轮播广告及热门商品 -->
+	<div class="container mr-sl mr-sl-1">
+		<div class="mr-spotlight mr-spotlight-1  row">
+			<!-- 显示轮播广告 -->
+			<div
+				class=" col-lg-9 col-md-12  col-sm-3 hidden-sm   col-xs-6 hidden-xs ">
+				<div class="mr-module module " id="Mod159">
+					<div class="module-inner">
+						<div class="module-ct">
+							<div class="mijoshop">
+								<div class="container_oc">
+									<div class="slideshow">
+										<div id="slidershow" class="nivoSlider">
+											<a href="#" class="nivo-imageLink" style="display: block;"><img
+												src="images/img1.png" class="img-responsive"
+												style="display: none;"> </a> <a href="#"
+												class="nivo-imageLink" style="display: none;"> <img
+												src="images/img2.png" class="img-responsive"
+												style="display: none;">
+											</a> <a href="#" class="nivo-imageLink" style="display: none;">
+												<img src="images/img3.png" class="img-responsive"
+												style="display: none;">
+											</a> <a href="#" class="nivo-imageLink" style="display: none;">
+												<img src="images/img4.png" class="img-responsive"
+												style="display: none;">
+											</a>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 显示热门商品 -->
+			<div
+				class="col-lg-3  col-md-6 hidden-md   col-sm-3 hidden-sm   col-xs-6 hidden-xs ">
+				<div class="mr-module module highlight " id="Mod160">
+					<div class="module-inner">
+						<h3 class="module-title ">
+							<span>热门商品</span>
+						</h3>
+						<div class="module-ct">
+							<div class="mijoshop">
+								<div class="container_oc">
+									<div class="box_oc">
+										<!-- 循环显示热门商品 ：添加两条商品信息-->
+
+										<div class="box-product product-grid">
+											<div>
+												<div class="image">
+													<a href="goodsDetail.html?ID=<%=hot_ID%>"><img
+														src="./images/goods/23.jpg" width="250px"> </a>
+												</div>
+												<div class="name">
+													<a href="goodsDetail.html?ID=<%=hot_ID%>"><%=hot_goodsName%>
+													</a>
+												</div>
+												<!-- 星级评分条 -->
+												<div class="rating">
+													<span class="fa fa-stack"><i
+														class="fa fa-star fa-stack-2x"></i><i
+														class="fa fa-star-o fa-stack-2x"></i> </span> <span
+														class="fa fa-stack"><i
+														class="fa fa-star fa-stack-2x"></i><i
+														class="fa fa-star-o fa-stack-2x"></i> </span> <span
+														class="fa fa-stack"><i
+														class="fa fa-star fa-stack-2x"></i><i
+														class="fa fa-star-o fa-stack-2x"></i> </span> <span
+														class="fa fa-stack"><i
+														class="fa fa-star fa-stack-2x"></i><i
+														class="fa fa-star-o fa-stack-2x"></i> </span> <span
+														class="fa fa-stack"><i
+														class="fa fa-star fa-stack-2x"></i><i
+														class="fa fa-star-o fa-stack-2x"></i> </span>
+												</div>
+												<!-- // 星级评分条 -->
+												<!-- 商品价格 -->
+												<div class="price">
+													<span class="price-new">价格：3000 元 </span>
+												</div>
+												<!-- // 商品价格 -->
+											</div>
+										</div>
+
+										<!-- // 循环显示热门商品 ：添加两条商品信息-->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="module-ct">
+							<div class="mijoshop">
+								<div class="container_oc">
+									<div class="box_oc">
+										<!-- 循环显示热门商品 ：添加两条商品信息-->
+
+										<div class="box-product product-grid">
+											<div>
+												<div class="image">
+													<a href="goodsDetail.html?ID=<%=hot_ID%>"><img
+														src="./images/goods/24.jpg" width="250px"> </a>
+												</div>
+												<div class="name">
+													<a href="goodsDetail.html?ID=<%=hot_ID%>"><%=hot_goodsName%>
+													</a>
+												</div>
+												<!-- 星级评分条 -->
+												<div class="rating">
+													<span class="fa fa-stack"> <i
+														class="fa fa-star fa-stack-2x"></i> <i
+														class="fa fa-star-o fa-stack-2x"></i>
+													</span> <span class="fa fa-stack"> <i
+														class="fa fa-star fa-stack-2x"></i> <i
+														class="fa fa-star-o fa-stack-2x"></i>
+													</span> <span class="fa fa-stack"> <i
+														class="fa fa-star fa-stack-2x"></i> <i
+														class="fa fa-star-o fa-stack-2x"></i>
+													</span> <span class="fa fa-stack"> <i
+														class="fa fa-star fa-stack-2x"></i> <i
+														class="fa fa-star-o fa-stack-2x"></i>
+													</span> <span class="fa fa-stack"> <i
+														class="fa fa-star fa-stack-2x"></i> <i
+														class="fa fa-star-o fa-stack-2x"></i>
+													</span>
+												</div>
+												<!-- // 星级评分条 -->
+												<!-- 商品价格 -->
+												<div class="price">
+													<span class="price-new">价格：3000 元 </span>
+												</div>
+												<!-- // 商品价格 -->
+											</div>
+										</div>
+
+										<!-- // 循环显示热门商品 ：添加两条商品信息-->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- // 显示热门商品 -->
+		</div>
+	</div>
+	<!-- //轮播广告及热门商品  -->
+	<!-- 最新上架及打折商品展示 -->
+	<nav class="container mr-masstop  hidden-sm hidden-xs">
+	<div class="custom">
+		<div>
+			<div class="ja-tabswrap default" style="width: 100%;">
+				<div id="myTab" class="container">
+
+					<h3 class="index_h3">
+						<span class="index_title">最新上架</span>
+					</h3>
+					<!-- //最新上架选项卡 -->
+					<div class="ja-tab-content ja-tab-content col-6 active"
+						style="opacity: 1; width: 100%; visibility: visible;">
+						<div class="ja-tab-subcontent">
+							<div class="mijoshop">
+								<div class="container_oc">
+									<div id="newGoods" class="row">
+										<!-- 循环显示最新上架商品 ：添加12条商品信息-->
+
+										
+
+										
+										<!-- //循环显示最新上架商品：添加12条商品信息 -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- //最新上架选项卡 -->
+					<!-- 打折商品选项卡 -->
+					<h3 class="index_h3">
+						<span class="index_title">打折商品</span>
+					</h3>
+					<div class="ja-tab-subcontent">
+						<div class="mijoshop">
+							<div class="container_oc">
+								<div id="saleGoods" class="row">
+									<!-- 循环显示打折商品 ：添加12条商品信息-->
+
+									
+
+									<!-- 循环显示打折商品 ：添加12条商品信息-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //打折商品 选项卡-->
+			</div>
+		</div>
+	</div>
+	</nav>
+	<!-- //最新上架及打折商品展示 -->
+	<!-- 版权栏 -->
+	<!--  include page="common-footer" -->
+	<div class="include" file="doCommonFooter.do"></div>
+	
+	<!-- //版权栏 -->
+</body>
+
+<script type="text/javascript">
+		//实现调用幻灯片插件轮播广告
+										
+		jQuery(document).ready(function() {
+			jQuery('#slidershow').nivoSlider();
+			 
+				}
+			})
+			doGetObjects();
+		});
+										
+		// 获取页面参数
+		function GetString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");//正则表达式
+			var r = window.location.search.substr(1).match(reg);//获取鼠标点击区域
+			if (r != null)
+				return unescape(r[2]);//返回区域编号
+			return null;
+		}
+		var type = GetString('type');
+		if (type === '14') {
+			var jingying = document.getElementById('jingying');
+			jingying.style.backgroundColor = "#9E2626";
+
+		}
+		if (type === '15') {
+			var wenyi = document.getElementById('wenyi');
+			wenyi.style.backgroundColor = "#9E2626";
+
+		}
+		if (type === '16') {
+			var jiaoyu = document.getElementById('jiaoyu');
+			jiaoyu.style.backgroundColor = "#9E2626";
+
+		}
+		if (type === '17') {
+			var shenghuo = document.getElementById('shenghuo');
+			shenghuo.style.backgroundColor = "#9E2626";
+
+		}
+		if (type == null) {//默认登录无点击
+			//var index = document.getElementById('index');
+			//index.style.backgroundColor = "#9E2626";
+
+		}
+		
+		function doGetObjects(){
+			var url="good/doFindPageGoods.do";
+			var params={currentPage:1};
+			jQuery.getJSON(url,params,function(result){
+				doSetNewGoods(result,'newGoods');
+				
+			})
+			params={currentPage:1,saleState:"onSale"};
+			jQuery.getJSON(url,params,function(result){				
+				doSetNewGoods(result,'saleGoods');
+			})
+		}
+		
+		function doSetNewGoods(result,rowName){
+			var rowBody;
+			//console.log(result);
+			
+			for(var i=0;i<result.length;i++){
+				//console.log(result[i].picture);
+				var rows=jQuery("<div class='product-grid col-lg-2 col-md-3 col-sm-6 col-xs-12'>"+
+							"<div class='product-thumb transition'>"+
+								"<div class='actions'>"+
+									"<div class='image'>"+
+										"<a href='doGoodsDetail.do?ID="+result[i].id+"'> "+
+											"<img src='./images/goods/"+result[i].picture+"' alt='"+result[i].goodsName+"'class='img-responsive'>"+
+										"</a>"+
+									"</div>"+
+									"<div class='button-group'>"+
+										"<div class='cart'>"+
+											"<button class='btn btn-primary btn-primary' type='button'"+
+												"data-toggle='tooltip'"+
+												"onclick=\"javascript:window.location.href='cart_add.html?goodsID=<%=new_ID%>&num=1'; \""+
+												"style='display: none; width: 33.3333%;'"+
+												"data-original-title='加入到购物车'>"+
+												"<i class='fa fa-shopping-cart'></i>"+
+											"</button>"+
+										"</div>"+
+									"</div>"+
+								"</div>"+
+								
+							"</div>"+
+						"</div>")
+						
+						
+				var ncaption="<div class='caption'>"+
+								"<div class='name' style='height: 40px'>"+
+									"<a href='doGoodsDetail.do?ID="+result[i].id+"'> <span "+
+										"style='color: #0885B1'>商品名：</span> "+result[i].goodsName+""+
+									"</a>"+
+								"</div>"+
+								"<p class='price'>价格："+result[i].nowPrice+"元</p>"+
+							"</div>"		
+				
+							
+				var scaption="	<div class='caption'> "+
+												"<div class='name' style='height: 40px'> "+
+													"<a href='goodsDetail' style='width: 95%'> <span "+
+														"style='color: #0885B1'>商品名：</span>"+result[i].goodsName+" "+
+													"</a> "+
+												"</div> "+
+												"<div class='name' style='margin-top: 10px'> "+
+													"<span style='color: #0885B1'>分类：</span>"+result[i].subType.typeName+" "+
+												"</div> "+
+												"<span class='price'> 现价："+result[i].nowPrice+" 元 </span><br> <span "+
+												"class='oldprice'>原价："+result[i].price+" 元 </span> "+
+											"</div> "
+				if(rowName=="newGoods"){
+					rows.children(".transition").append(ncaption);
+					rowBody=jQuery("#newGoods");
+				}else{
+					rows.children(".transition").append(scaption);
+					rowBody=jQuery("#saleGoods")
+				}
+			
+				rowBody.append(rows);
+			}
+			
+		}
+										
+										
+										
+</script>
+</html>

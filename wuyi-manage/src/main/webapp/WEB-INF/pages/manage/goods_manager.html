@@ -1,0 +1,171 @@
+
+	    <table width="100%"  border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="18" height="45" align="right">&nbsp;</td>
+        <td colspan="3" class="tableBorder_B_dashed">
+        <img src="images/manage_ico1.GIF" width="11" height="11">&nbsp;
+        <a onClick="doSuperType()" href="#"> [大分类信息管理]</a>&nbsp;&nbsp;&nbsp;
+        <img src="images/manage_ico2.GIF" width="11" height="11">&nbsp;
+        <a onClick="doSubType()" href="#">[小分类信息管理]</a>&nbsp;&nbsp;&nbsp;
+        <img src="images/manage_ico3.GIF" width="12" height="12">&nbsp;
+        <a id="addGoods" href="#">[添加商品信息]</a></td>
+        <td width="24">&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td height="10" colspan="3">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="29" align="right">&nbsp;</td>
+        <td width="10" background="images/manage_leftTitle_left.GIF">&nbsp;</td>
+        <td width="989" align="center" background="images/manage_leftTitle_mid.GIF" class="word_white"><b>商品列表</b></td>
+        <td width="10" background="images/manage_leftTitle_right.GIF">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+	<!---->
+    <table width="92%" height="192"  border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td valign="top">
+			<table width="100%" height="14"  border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td height="13" align="center">&nbsp;</td>
+            </tr>
+         
+          </table>
+            <table width="100%" height="60"  border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#FFFFFF" bordercolorlight="#E6E6E6">
+            <thead>
+              <tr bgcolor="#eeeeee">
+                <td width="40%" height="24" align="center">商品名称</td>
+                <td width="22%" align="center">价格</td>
+                <td width="11%" align="center">是否新品</td>
+                <td width="11%" align="center">是否特价</td>
+                <td width="8%" align="center">修改</td>
+                <td width="8%" align="center">删除</td>
+              </tr>
+              </thead>
+
+			<tbody id="tbodyId">
+              
+</tbody>
+            </table>
+            
+           
+            
+		  </td>
+        </tr>
+      </table>
+       <table align="center" >
+      			<div id="pageId"></div>
+     	 	</table>
+	 <!----> 
+<script>
+	jQuery(function(){
+		//菜单添加点击事件
+		doLoadUI("addGoods","goodsma/doGoodsAdd.do");
+		 
+		 //加载分页按钮页面
+		 $("#pageId").load("doPageUI.do",function(){
+			//初始化显示第一页数据
+		   doGetObjects();
+			
+		   });
+		 
+		
+	})
+	
+	//查询并显示当前页数据
+ function doGetObjects(){
+	
+	var pageCurrent=$("#pageId").data("pageCurrent");
+	if(!pageCurrent)pageCurrent=1;
+	//1.请求参数定义
+	var params={"pageCurrent":pageCurrent};
+	//2.请求url定义
+	var url="goods/doFindPageObjects.do"
+	//3.发起异步请求获取数据(借助jQuery中的getJSON)
+	//result是返回的JSON对象(由JSON字符串转换而来)
+	$.getJSON(url,params,function(result){//callback
+		doHandleResponseResult(result);
+	});//ajax (xhr)
+	}
+ 
+	//处理服务端的响应结果
+	function doHandleResponseResult(result){
+		if(result.state==1){
+			//显示当前日志数据
+			doSetTableBodyRows(result.data.records);
+			//显示分页信息
+			doSetPagination(result.data);
+		}else{
+			alert(result.message);
+		}
+	}
+	
+	function doSetTableBodyRows(records){
+		//1.获取tbody对象,并清空原有内容
+		var tBody=$("#tbodyId");        
+		tBody.empty(); //tBody.innerHTML=""
+		//2.迭代records记录,然后追加到tbody中
+		for(var i=0;i<records.length;i++){
+			var tr=$("<tr align='center'></tr>");
+			tr.data("goodid",records[i].id);
+			//console.log(tr.data("id"))
+			var tds=doCreateTds(records[i]);
+			tr.append(tds);
+			tBody.append(tr);
+		}                                                            
+		
+		 doLoadBtn("modifyGoods","goodsma/doGoodsModify.do");
+		 //doLoadBtn("delGoods","goodsma/doGoodsDel.do");
+		 jQuery(".delGoods").click(doDeleteObject);
+		
+	}
+	
+	function doCreateTds(data){
+		
+		   var tds="<td height='24'>"+data.goodsName+"</td>"+
+			   	 "<td align='center'>"+data.nowPrice+"</td>"+
+			     "<td align='center'>"+data.newGoods+"</td>"+
+			     "<td align='center'>"+data.sale+"</td>"+
+			     "<td align='center'><a aa='"+data.id+"' class='modifyGoods' href='#'><img src='images/modify.gif' width='19' height='19' ></a></td>"+
+			     "<td align='center'><a aa='"+data.id+"' class='delGoods' href='#'><img src='images/del.gif' width='20' height='20' ></a></td>";	   
+			return tds;
+	 }
+	
+	
+	
+	 function doDeleteObject(){
+			
+			var goodid=jQuery(this).attr("aa");
+			
+			//1.给出提示确认删除吗
+			if(!confirm("确认删除吗"))return;
+			//console.log(idArray);
+			
+			//3.发送异步请求执行删除操作
+			//3.1构建请求参数
+			var params={"ID":goodid};
+			//3.2构建请求的url
+			var url="goods/doDeleteObjects.do";
+			//3.3提交异步请求
+			$.getJSON(url,params,function(result){
+				console.log(result)
+				if(result.state==1){
+					alert(result.message);
+					//doSetPageCurrent();
+					doGetObjects();
+				}else{
+					alert(result.message);
+				}
+			});
+			}
+ 
+ 
+	
+
+</script>
+
+  
+	     

@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+<title>51商城――后台管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<script src="js/jquery.1.3.2.js" type="text/javascript"></script>
+<script src="js/jsArr01.js" type="text/javascript"></script>
+<script src="js/module.js" type="text/javascript"></script>
+<script src="js/jsArr02.js" type="text/javascript"></script>
+<script src="js/tab.js" type="text/javascript"></script>
+</head>
+
+<body >
+<!--  include page="banner.jsp"-->
+<!-- banner -->
+<table width="1280" height="114"  border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top"><img src="images/manage_banner.JPG" width="1280" height="114" /></td>
+  </tr>
+</table>
+<!-- -->
+
+
+
+
+<table width="1280" height="288"  border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+  <tr>
+
+	  <td align="center" valign="top" id="mainBody">
+
+
+		  
+	  </td>
+
+   
+	  
+	      <td width="182" valign="top">
+		      <table width="100%" height="431"  border="0" cellpadding="0" cellspacing="0">
+      			<tr>
+        			<td width="199" valign="top" bgcolor="#FFFFFF">
+
+	        			<jsp:include page="navigation.jsp"/>
+	        			<!-- 导航  -->
+						<table width="199" height="431"  border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="18" colspan="3"><img src="images/manage_rightTitle.GIF" width="189" height="37" /></td>
+          </tr>
+          <tr>
+            <td height="9" colspan="3" background="images/manage_rightKtop.GIF"></td>
+          </tr>
+
+          <tr>
+            <td colspan="3" align="center" valign="top" background="images/manage_rightKmid.GIF"><table width="90%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="20%" height="50" align="center" class="tableBorder_B_dashed"><img src="images/manage_listIco.GIF" width="10" height="11" /></td>
+            <td width="80%" class="tableBorder_B_dashed"><a id="load-gm-id" href="#">商品管理<br>
+              Goods Manage</a></td>
+            </tr>
+            <tr>
+            <td height="50" align="center" class="tableBorder_B_dashed"><img src="images/manage_listIco.GIF" width="10" height="11" /></td>
+            <td class="tableBorder_B_dashed"><a id="load-tm-id" href="#">销量排行榜<br>
+              Sale Top 10</a></td>
+            </tr>
+          <tr>
+            <td height="50" align="center" class="tableBorder_B_dashed"><img src="images/manage_listIco.GIF" width="10" height="11" /></td>
+            <td class="tableBorder_B_dashed"><a id="load-mm-id" href="#">会员管理<br>
+              Member Manage</a></td> 
+            </tr>
+          <tr>
+            <td height="50" align="center" class="tableBorder_B_dashed"><img src="images/manage_listIco.GIF" width="10" height="11" /></td>
+            <td class="tableBorder_B_dashed"><a id="load-om-id" href="#" >订单管理<br>
+              Order Manage</a></td>
+            </tr>
+            <tr>
+            <td height="50" align="center" class="tableBorder_B_dashed"><img src="images/manage_listIco.GIF" width="10" height="11" /></td>
+            <td class="tableBorder_B_dashed"><a href="logg.do">退出后台<br>
+              Exit Background </a></td>
+            </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="9" colspan="3" align="center" background="images/manage_rightKbottom.GIF"></td>
+          </tr>
+</table>
+
+
+	        			
+	        			<!--   -->
+	   				</td>
+      			</tr>
+   			 </table>
+   		</td>	  
+  </tr>
+</table>
+
+
+
+
+<jsp:include page="copyright.jsp"/>
+<!-- 底部页面 -->
+<table width="1280" height="103"  border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+    <tr>
+        <td height="13" colspan="2" bordercolor="0">
+          <img src="images/copyright_line.GIF" width="1280" height="2" border="0" />       
+        </td>
+    </tr>
+    <tr>
+        <td height="40" colspan="2" align="center" class="word_gray">关于我们 | 销售排行 | 特价商品 | 购物流程 | 			QQ帮助 | 刷新页面 
+        </td>
+    </tr>
+    <tr>
+        <td height="19" align="center"> All CopyRights &copy; reserved 2019 湖南省常德市汉寿县龙潭桥镇王家冲村</td>
+    </tr>
+    <tr>
+        <td height="21" align="center">客服热线：18603003657  E-mail：454686806@qq.com</td>
+    </tr>
+</table>
+<!-- 底部页面 -->
+
+</body>
+<script type="text/javascript">
+		
+		function dokanyonghu() {
+			url = "user/doregister.do"
+			jQuery.getJSON(url, function(result) {
+				if (result.data.freeze==0) {
+					location.href = "Login_M.do?t=" + Math.random();
+					
+				}else{
+					//alert("欢迎你登录后台管理系统！")
+				}
+
+			})
+
+		}
+
+	</script>
+<script type="text/javascript">
+     //说明，在此位置添加js，使用load函数加载页面
+   //页面加载完成以后执行
+   jQuery(function(){
+	   
+	   dokanyonghu();
+	   
+	  
+	   jQuery("#mainBody").load("doGoodsManage.do");
+	   
+	   doLoadUI("load-gm-id","doGoodsManage.do");
+	   doLoadUI("load-tm-id","doTopGoods.do");
+	   doLoadUI("load-mm-id","doMemManage.do");
+	   doLoadUI("load-om-id","doOrderManage.do");
+	   //doLoadUI("load-user-id","user/doUserListUI.do");
+	   //doLoadUI("load-pwd-id","user/doUpdatePwdUI.do");
+	   
+	   //$(".user-footer").on("click",".btn-flat",doAterPwd);
+   })
+     
+   function doLoadUI(domId,url){
+		 //在id为domId的对象上注册一个点击事件
+	    	 jQuery("#"+domId).click(function(){
+	    		//在id为mainContentId的位置异步加载一个url对应的资源
+	  		   //并将服务端返回的资源插入到mainContentId的位置
+	    		 jQuery("#mainBody").load(url);
+	    	 });
+	     }
+   function doLoadBtn(domId,url){
+		 //在id为domId的对象上注册一个点击事件
+	    	 jQuery("."+domId).click(function(){
+	    		//在id为mainContentId的位置异步加载一个url对应的资源
+	  		   //并将服务端返回的资源插入到mainContentId的位置
+	  		   console.log(jQuery(this).attr("aa"))
+	  		   	jQuery("#mainBody").attr("choosedId",jQuery(this).attr("aa"))
+	  		   	console.log(jQuery("#mainBody"))
+	    		 jQuery("#mainBody").load(url);
+	    	 });
+	     }
+   
+   function doSuperType(){
+	   jQuery("#mainBody").load("goodsma/doSuperType.do");
+   }
+   function doSubType(){
+	   jQuery("#mainBody").load("goodsma/doSubType.do");
+   }
+   function doAddSuperType(){
+	   jQuery("#mainBody").load("goodsma/doAddSuperType.do");
+   }
+   function doAddSubType(){
+	   jQuery("#mainBody").load("goodsma/doAddSubType.do");
+   }
+</script>
+</html>
